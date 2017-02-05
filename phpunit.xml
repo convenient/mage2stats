@@ -1,0 +1,7 @@
+<phpunit backupGlobals="false" bootstrap="tests/phpunit/bootstrap.php" syntaxCheck="true">
+    <testsuites>
+        <testsuite name="Convenient Mage2Stats Test Suite">
+            <directory>tests/phpunit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

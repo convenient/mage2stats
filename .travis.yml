@@ -1,0 +1,20 @@
+language: php
+php:
+  - 7.0
+
+before_install:
+  - XDEBUG_CONF=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+  - mv "$XDEBUG_CONF" "$XDEBUG_CONF".bak
+
+install:
+  - composer self-update
+  - composer install -o --no-interaction --prefer-dist
+  - npm install
+
+before_script: mv "$XDEBUG_CONF".bak "$XDEBUG_CONF"
+
+script:
+  - npm test
+
+cache:
+  directories: $HOME/.composer/cache

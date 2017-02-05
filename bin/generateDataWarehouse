@@ -1,0 +1,82 @@
+#!/usr/bin/env php
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+if (is_file(__DIR__ . '/../config.json')) {
+    $config = json_decode(file_get_contents(__DIR__ . '/../config.json'), true);
+    $auth = $config['token'];
+} else {
+    $auth = null;
+    echo "Using the unauthenticated API, limited to 60 requests per hour" . PHP_EOL;
+}
+
+$dataGenerator = new \Convenient\Mage2Stats\DataGenerator();
+
+$magento2Api = new \Convenient\Mage2Stats\GithubApi('magento', 'magento2', $auth);
+echo "Getting pull requests" . PHP_EOL;
+$prs = $magento2Api->getPullRequests();
+echo "Getting issues" . PHP_EOL;
+$issues = $magento2Api->getIssues();
+echo "Processing" . PHP_EOL;
+
+//Gather report data for the frontend
+$dataBlob = [
+    'date' => date('Y-m-01'),
+    'repos' => [
+        'magento2' => $dataGenerator->getDataBlob($prs, $issues),
+    ]
+];
+
+//Purge the report of any incomplete months. This prevents the graph showing any months "in progress"
+//This is to give a fair view, in case I run the report late at some point (very likely).
+$codes = [
+    \Convenient\Mage2Stats\Constants::CODE_CLOSED,
+    \Convenient\Mage2Stats\Constants::CODE_OPENED,
+    \Convenient\Mage2Stats\Constants::CODE_MERGED,
+];
+
+$cutoffDate = $dataBlob['date'];
+
+foreach (array_keys($dataBlob['repos']) as $repoKey) {
+    foreach ($dataBlob['repos'][$repoKey]['pull_requests']['detail'] as $id => $data) {
+        foreach ($codes as $code) {
+            if (isset($data[$code]) && $data[$code] === $cutoffDate) {
+                unset($data[$code]);
+            }
+        }
+        $dataBlob['repos'][$repoKey]['pull_requests']['detail'][$id] = $data;
+    }
+    if (isset($dataBlob['repos'][$repoKey]['pull_requests']['date'][$cutoffDate])) {
+        unset($dataBlob['repos'][$repoKey]['pull_requests']['date'][$cutoffDate]);
+    }
+}
+
+//Make data available to the frontend in a JS file
+//Hacky but effective
+$filepath = realpath(__DIR__ . '/../docs/js/') . '/DataWarehouse.js';
+file_put_contents($filepath, 'var datawarehouse = ' . json_encode($dataBlob) . ';');
+
+/*
+ * Print out a paragraph to include at the top of the website
+ */
+end($dataBlob['repos']['magento2']['pull_requests']['date']);
+$key = key($dataBlob['repos']['magento2']['pull_requests']['date']);
+
+$monthString = date('F', strtotime($key));
+
+$prData = $dataBlob['repos']['magento2']['pull_requests']['date'][$key];
+$issueData = $dataBlob['repos']['magento2']['issues']['date'][$key];
+
+$prOpen = $prData[\Convenient\Mage2Stats\Constants::CODE_OPENED];
+$prClosed = $prData[\Convenient\Mage2Stats\Constants::CODE_CLOSED];
+$prMerged = $prData[\Convenient\Mage2Stats\Constants::CODE_MERGED];
+
+$issuesOpened = $issueData[\Convenient\Mage2Stats\Constants::CODE_OPENED];
+$issuesClosed = $issueData[\Convenient\Mage2Stats\Constants::CODE_CLOSED];
+
+echo str_pad('', 100, '#') . PHP_EOL;
+echo "Edit docs/index.html so that the meta data reads:" . PHP_EOL;
+echo str_pad('', 100, '#') . PHP_EOL;
+echo "$monthString Summary: PRs $prOpen opened, $prMerged merged, $prClosed closed." .
+    " Issues $issuesOpened opened, $issuesClosed closed." . PHP_EOL;
+echo str_pad('', 100, '#') . PHP_EOL;

@@ -1,0 +1,104 @@
+body {
+    /* Room for the navbar*/
+    padding-top: 50px;
+}
+
+footer {
+    background-color: #1a1a1b;
+    margin-top:30px;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top:20px;
+}
+
+footer li {
+    display: inline;
+}
+
+footer ul {
+    /*centre the footer links*/
+    margin-left: -30px;
+}
+
+.spacer {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.anchor {
+    /*https://github.com/twbs/bootstrap/issues/1768#issuecomment-9793708*/
+    padding-top: 40px;
+    margin-top: -40px;
+}
+
+.ui-rangeSlider-label {
+    /* Adjust the default css to apply extra margin to realign label, bootstrap broke it.*/
+    margin: -30px 2px 2px -30px;
+}
+
+.mage2statschart {
+    height: 55%;
+    padding-bottom: 15px;
+    /* Give some room for the slider below */
+}
+
+.table-state {
+    height: 35%;
+}
+
+.tables {
+    padding-top: 10px;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .google-visualization-table-table {
+        width: 300px;
+    }
+}
+
+@media (min-width: 768px) {
+    div .google-visualization-table {
+        /* Frig it so empty tables are rendered consistently heighted */
+        min-height: 330px;
+    }
+
+    .pr-table {
+        display: inline-block;
+    }
+}
+
+/* Start Link styling, orange for magento */
+.navbar-inverse .navbar-brand {
+    color: #FF5722;
+}
+
+/*Fix navbar hamburger colour*/
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #FF5722;
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.nav > li > a:link,
+.nav > li > a:visited
+{
+    color: #FF5722;
+}
+
+a:link,
+a:visited
+{
+    color: #FF5722;
+}
+
+a:hover,
+a:active {
+    text-decoration: none;
+    color: #CF4319;
+}
+/* Finish Link styling */
+

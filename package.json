@@ -1,0 +1,25 @@
+{
+  "name": "mage2stats",
+  "version": "1.0.0",
+  "description": "Magento 2 github contribution statistics",
+  "main": "js/mage2stats.js",
+  "scripts": {
+    "test": "mocha tests/mocha --ui tdd && ./vendor/bin/phpunit",
+    "build": "browserify --standalone mage2stats ./src/main.js  | uglifyjs > ./docs/js/mage2stats.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/convenient/mage2stats.git"
+  },
+  "author": "Luke Rodgers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/convenient/mage2stats/issues"
+  },
+  "homepage": "https://github.com/convenient/mage2stats#readme",
+  "dependencies": {
+    "browserify": "^13.3.0",
+    "uglify-js": "^2.7.5",
+    "mocha": "^3.2.0"
+  }
+}
