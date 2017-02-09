@@ -75,7 +75,7 @@ $issuesOpened = $issueData[\Convenient\Mage2Stats\Constants::CODE_OPENED];
 $issuesClosed = $issueData[\Convenient\Mage2Stats\Constants::CODE_CLOSED];
 
 echo str_pad('', 100, '#') . PHP_EOL;
-echo "Edit docs/index.html so that the meta data reads:" . PHP_EOL;
+echo "Edit docs/index.html so that the meta data and <h4> tag reads:" . PHP_EOL;
 echo str_pad('', 100, '#') . PHP_EOL;
 echo "$monthString Summary: PRs $prOpen opened, $prMerged merged, $prClosed closed." .
     " Issues $issuesOpened opened, $issuesClosed closed." . PHP_EOL;
