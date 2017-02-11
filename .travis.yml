@@ -7,8 +7,10 @@ before_install:
   - mv "$XDEBUG_CONF" "$XDEBUG_CONF".bak
 
 install:
+  - nvm install 4.0.0
   - composer self-update
   - composer install -o --no-interaction --prefer-dist
+  - node --version
   - npm install
 
 before_script: mv "$XDEBUG_CONF".bak "$XDEBUG_CONF"
