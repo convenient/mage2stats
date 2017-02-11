@@ -1,6 +1,6 @@
 # mage2stats
 
-[![Build Status](https://travis-ci.com/convenient/mage2stats.svg?token=4DzjEueYNQwZuk3ywXjG&branch=master)](https://travis-ci.com/convenient/mage2stats)
+[![Build Status](https://travis-ci.org/convenient/mage2stats.svg?branch=master)](https://travis-ci.org/convenient/mage2stats)
 
 http://www.mage2stats.com
 
