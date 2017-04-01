@@ -80,3 +80,4 @@ echo str_pad('', 100, '#') . PHP_EOL;
 echo "$monthString Summary: PRs $prOpen opened, $prMerged merged, $prClosed closed." .
     " Issues $issuesOpened opened, $issuesClosed closed." . PHP_EOL;
 echo str_pad('', 100, '#') . PHP_EOL;
+echo "Update the share image" . PHP_EOL;
