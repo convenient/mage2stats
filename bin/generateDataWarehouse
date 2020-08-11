@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+ini_set("memory_limit", "-1");
 require_once __DIR__ . '/../vendor/autoload.php';
 
 if (is_file(__DIR__ . '/../config.json')) {
